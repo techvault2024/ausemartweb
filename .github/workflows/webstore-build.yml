@@ -1,1 +1,26 @@
+# Build pipeline
 
+name: webstore-build
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        name: build and publish
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout
+              uses: actions/checkout@v3.5.3
+
+            - name: restore
+              run: dotnet restore
+            
+            - name: build
+              run: dotnet build --configuration Release
+            
+            - run: dotnet publish --configuration Release -o ./webstore
+              name: publish
+
+            
